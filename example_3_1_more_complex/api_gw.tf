@@ -63,7 +63,7 @@ resource "aws_api_gateway_integration" "daily_cat_get_lambda_handler" {
 
 data "aws_caller_identity" "current" {}
 
-resource "aws_lambda_permission" "apigw_lambda" {
+resource "aws_lambda_permission" "allow_daily_cat_endpoint_lambda_execution_from_api_gw" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.daily_cat_endpoint.function_name

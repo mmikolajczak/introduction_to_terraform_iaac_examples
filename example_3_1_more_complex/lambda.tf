@@ -26,7 +26,7 @@ resource "aws_lambda_function" "daily_cat_endpoint" {
     variables = {
       "CATS_PHOTOS_BUCKET": aws_s3_bucket.daily_cats_photos.bucket
       "MAX_PHOTO_ID": length(aws_s3_bucket_object.cat_photos_objects) - 1
-      "SAMPLING_STATISTICS_TABLE_NAME": aws_dynamodb_table.random_cat_photos_sampling_statistics.name
+      "SAMPLING_STATISTICS_TABLE_NAME": aws_dynamodb_table.daily_cat_photos_sampling_statistics.name
     }
   }
 }
@@ -107,7 +107,7 @@ resource "aws_iam_role_policy" "daily_cat_endpoint_lambda_allow_dynamodb_cat_pho
             "dynamodb:UpdateItem"
           ],
           "Resource": [
-            "${aws_dynamodb_table.random_cat_photos_sampling_statistics.arn}"
+            "${aws_dynamodb_table.daily_cat_photos_sampling_statistics.arn}"
           ]
       }
   ]

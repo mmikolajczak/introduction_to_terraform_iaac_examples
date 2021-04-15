@@ -1,5 +1,5 @@
-resource "aws_dynamodb_table" "random_cat_photos_sampling_statistics" {
-  name           = "random_cat_photos_sampling_statistics"
+resource "aws_dynamodb_table" "daily_cat_photos_sampling_statistics" {
+  name           = "daily_cat_photos_sampling_statistics"
   billing_mode   = "PROVISIONED"
   read_capacity  = 5
   write_capacity = 5
