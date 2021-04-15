@@ -26,6 +26,7 @@ resource "aws_lambda_function" "daily_cat_endpoint" {
     variables = {
       "CATS_PHOTOS_BUCKET": aws_s3_bucket.daily_cats_photos.bucket
       "MAX_PHOTO_ID": length(aws_s3_bucket_object.cat_photos_objects) - 1
+      "SAMPLING_STATISTICS_TABLE_NAME": aws_dynamodb_table.random_cat_photos_sampling_statistics.name
     }
   }
 }
@@ -86,6 +87,27 @@ resource "aws_iam_role_policy" "daily_cat_endpoint_lambda_allow_cat_photos_objec
           "Resource": [
             "${aws_s3_bucket.daily_cats_photos.arn}",
             "${aws_s3_bucket.daily_cats_photos.arn}/*"
+          ]
+      }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "daily_cat_endpoint_lambda_allow_dynamodb_cat_photos_sampling_statistics_write" {
+  role = aws_iam_role.daily_cat_endpoint_lambda.name
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": [
+            "dynamodb:PutItem",
+            "dynamodb:UpdateItem"
+          ],
+          "Resource": [
+            "${aws_dynamodb_table.random_cat_photos_sampling_statistics.arn}"
           ]
       }
   ]
