@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-2"
+  region = var.aws_region
 }
 
 terraform {
@@ -17,5 +17,3 @@ terraform {
     encrypt = true
   }
 }
-
-
